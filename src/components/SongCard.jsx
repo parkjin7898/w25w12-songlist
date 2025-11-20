@@ -1,15 +1,31 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 // song prop으로 song 객체 받기
 // props.song 대신 song 바로 사용 가능
 export default function SongCard({ song }) {
   return (
-    <Link to={`/song/${song.id}`} >
-      <img 
-        src={`https://picsum.photos/200/200?random=${song.id}`} 
-        alt={`${song.title} 앨범 이미지`}
-      />
-      <div>{song.title}</div>
+    <Link 
+      to={`/song/${song.id}`} 
+      className="flex p-3 rounded-xl hover:bg-gray-200 transition duration-150 shadow-sm hover:shadow-md bg-white w-full"
+    >
+      
+      <div className="flex-shrink-0 mr-4">
+        <img 
+          src={`https://picsum.photos/192/192?random=${song.id}`} 
+          alt={`${song.title} 앨범 이미지`}
+          className="w-16 h-16 object-cover rounded-lg shadow-md" 
+        />
+      </div>
+      
+      <div className="flex-grow min-w-0">
+        <div className="text-lg font-semibold text-gray-800 truncate">
+          {song.title}
+        </div>
+        <div className="text-sm text-gray-500 truncate">
+          {song.singer}
+        </div>
+      </div>
+     
     </Link>
   )
 }
