@@ -1,13 +1,15 @@
 import { useParams, Link } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import { getSongDetail } from '../api/songApi.js'
 
-// TODO: 테스트 Only. 변경할 것
-const song = {
-  "id": "69149cde71914f6a424fd013",
-  "title": "Golden",
-  "singer": "HUNTR/X",
-  "rating": 3,
-  "lyrics": "I'm done hidin', now I'm shinin' like I'm born to be\nWe dreamin' hard, we came so far, now I'll believe\nWe're goin' up, up, up, it's our moment\nYou know together we're glowing\nGonna be, gonna be golden\nOh, up, up, up with our voices\n영원히 깨질 수 없는\nGonna be, gonna be golden"
-}
+// // TODO: 테스트 Only. 변경할 것
+// const song = {
+//   "id": "69149cde71914f6a424fd013",
+//   "title": "Golden",
+//   "singer": "HUNTR/X",
+//   "rating": 3,
+//   "lyrics": "I'm done hidin', now I'm shinin' like I'm born to be\nWe dreamin' hard, we came so far, now I'll believe\nWe're goin' up, up, up, it's our moment\nYou know together we're glowing\nGonna be, gonna be golden\nOh, up, up, up with our voices\n영원히 깨질 수 없는\nGonna be, gonna be golden"
+// }
 
 // 별점 렌더링 함수
 // rating: 현재 별점, maxRating: 최대 별점(기본값 5)
@@ -45,6 +47,20 @@ const renderRatingStars = (rating, maxRating = 5) => {
 // id 파라미터 받아서 해당 노래 정보 보여주기
 const SongDetail = () => {
   const { id } = useParams();
+
+  const { data: song, isLoading, isError, error } = useQuery({
+    queryKey: ['song', id],
+    queryFn: () => getSongDetail(id),
+    enabled: !!id,
+  })
+
+  if (isLoading) {
+    return <p className="text-center mt-10">Loading...</p>
+  }
+
+  if (isError) {
+    return <p className="text-center mt-10">오류 발생: {error.message}</p>
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 flex justify-center">
