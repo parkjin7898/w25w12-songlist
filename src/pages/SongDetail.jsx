@@ -50,6 +50,7 @@ const SongDetail = () => {
 
   const { data: song, isLoading, isError, error } = useQuery({
     queryKey: ['song', id],
+    // 인자가 있는 함수는 arrow function으로 감싸서 전달
     queryFn: () => getSongDetail(id),
     enabled: !!id,
   })
