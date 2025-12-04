@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const api = axios.create({
   // API 서버의 기본 URL 설정
-  baseURL: 'http://localhost:8080/api/songs',
+  baseURL: 'https://w25w11-mongodb-backend-zu1n.onrender.com/api/songs',
 })
 
 // 노래 목록을 가져오는 함수
